@@ -98,10 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Popup with call link
 function showPopup() {
-  document.getElementById("popup").style.display = "flex";
+  const popup = document.getElementById("popup");
+  popup.classList.add("active")
 }
 
 function handleOutsideeClick(event) {
   const popup = document.getElementById("popup");
-  popup.style.display = "none";
+  popup.classList.remove("active");
 }
