@@ -185,9 +185,9 @@ body.nav-open .nav-links {
 /* Hero Section */
 
 .hero {
-  background: url('alpha-images/OUTSIDE-2.jpg') no-repeat center center/cover;
+  background: url('../alpha-images/OUTSIDE.jpg') no-repeat center center/cover;
   height: 70vh;
-  color:red;
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
