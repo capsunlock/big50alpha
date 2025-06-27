@@ -82,24 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // switching of home background
-const heroImages = [
-  'url("../alpha-images/OUTSIDE.jpg")',
-  'url("../alpha-images/OUTSIDE-2.jpg")'
-];
 
-let currentHero = 0;
-const heroSection = document.getElementById('home');
+// const heroImages = [
+//   '../alphaImages/OUTSIDE.jpg',
+//   '../alphaImages/OUTSIDE-2.jpg")'
+// ];
 
-function switchBackground() {
-  section.style.backgroundImage = heroImages[currentHero];
-  currentHero = (currentHero + 1) % heroImages.length
-}
+// let currentHero = 0;
+// const heroSection = document.getElementById('home');
 
-//initial background
-switchBackground();
+// setInterval (() => {
+//   heroSection.style.backgroundImage = `url(${heroImages[currentHero]}`;
+//   currentHero = (currentHero + 1) % heroImages.length;}, 5000);
 
-// change every 15 seconds
-setInterval(switchBackground, 5000);
 
 // Popup with call link
 function showPopup() {
