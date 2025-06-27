@@ -4,14 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-     <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-  </head>
-  <body>
 
+  <body>
     <!-- Header -->
-      <header>
+    <header>
       <nav class="container">
         <div class="logo">
           <img
@@ -19,11 +21,11 @@
             alt="bigFiftyLogo"
             loading="lazy"
           />
-          <h1>BIG 50 </h1>
+          <h1>BIG 50</h1>
         </div>
         <ul class="nav-links">
           <li><a href="index.html" aria-label="Home">Home</a></li>
-          <li><a href="rooms.html" aria-label="Rooms">Room</a></li>
+          <li><a href="#rooms" aria-label="Rooms">Room</a></li>
           <li><a href="gallery.html" aria-label="Gallery">Gallery</a></li>
           <li><a href="about.html" aria-label="About">About Us</a></li>
           <li><a href="contact.html" aria-label="Contact">Contact</a></li>
@@ -50,72 +52,148 @@
     </header>
 
     <main>
-      
-    <!-- Hero Section -->
+      <!-- Hero Section -->
       <section id="home" class="hero">
-      <div class="home-content">
-        <h1>WELCOME TO BIG 50 HOTEL AND SUITES</h1>
+        <div class="home-content">
+          <h1>WELCOME TO BIG 50 HOTEL AND SUITES</h1>
 
-        <button class="btn" onclick="showPopup()">Book Your Stay</button>
+          <button class="btn" onclick="showPopup()">Book Your Stay</button>
 
-        <div
-          class="popup-overlay"
-          id="popup"
-          onclick="handleOutsideeClick(event)"
-        >
-          <div class="popup-content" id="" onclick="event.stopPropagation()">
-            <h1>Booking</h1>
+          <div
+            class="popup-overlay"
+            id="popup"
+            onclick="handleOutsideeClick(event)"
+          >
+            <div class="popup-content" id="" onclick="event.stopPropagation()">
+              <h1>Booking</h1>
 
-            <p>
-              Welcome to Big 50 Hotel. To make a booking, please give us a call
-              or message us Whatsapp.
-            </p>
+              <p>
+                Welcome to Big 50 Hotel. To make a booking, please give us a
+                call or message us Whatsapp.
+              </p>
 
-            <h3>Contact Information</h3>
-            <div class="contact-info-content">
-              <div id="ty-one" class="ty">
-                <img
-                  src="../big50/images/phone-call-1.png"
-                  alt="phone.png"
-                  loading="lazy"
-                />
-                <p>+234 906 992 5143</p>
-              </div>
-              <a
-                href="https://wa.me/+2349069925143"
-                style="text-decoration: none; color: black"
-                ><div id="ty-two" class="ty">
+              <h3>Contact Information</h3>
+              <div class="contact-info-content">
+                <div id="ty-one" class="ty">
                   <img
-                    src="../big50/images/whatsapp.png"
-                    alt="whatsapp.png"
+                    src="../big50/images/phone-call-1.png"
+                    alt="phone.png"
                     loading="lazy"
                   />
                   <p>+234 906 992 5143</p>
-                </div></a
-              >
+                </div>
+                <a
+                  href="https://wa.me/+2349069925143"
+                  style="text-decoration: none; color: black"
+                  ><div id="ty-two" class="ty">
+                    <img
+                      src="../big50/images/whatsapp.png"
+                      alt="whatsapp.png"
+                      loading="lazy"
+                    />
+                    <p>+234 906 992 5143</p>
+                  </div></a
+                >
+              </div>
+              <a href="tel:+2349069925143" class="call-btn">Call Now</a>
             </div>
-            <a href="tel:+2349069925143" class="call-btn">Call Now</a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="rooms" class="section">
-  <h2>Rooms</h2>
-  <section class="sect"></section>
-</section>
+      <section id="rooms" class="section">
+        <h2>Rooms</h2>
+        <section class="sect"></section>
+      </section>
 
-<!-- Template for a single room card -->
-<template id="room-card-template">
-  <div class="it-em">
-    <span class="room-tag"></span>
-    <img />
-    <h4></h4>
-    <p></p>
-  </div>
-</template>
+      <!-- Template for a single room card -->
+      <template id="room-card-template">
+        <div class="it-em">
+          <span class="room-tag"></span>
+          <img />
+          <h4></h4>
+          <p></p>
+        </div>
+      </template>
 
+      <!-- What we offer -->
+      <section class="section offers">
+        <h2>What We Offer</h2>
+        <div class="offer-grid">
+          <div class="offer-item">
+            <i class="fas fa-wifi"></i>
+            <h4>Free High-Speed Wi-Fi</h4>
+            <p>
+              Stay connected anywhere in the building—fast, reliable, unlimited.
+            </p>
+          </div>
+          <div class="offer-item">
+            <i class="fas fa-swimming-pool"></i>
+            <h4>Infinity Pool</h4>
+            <p>Cool off or unwind with skyline views from our rooftop pool.</p>
+          </div>
+          <div class="offer-item">
+            <i class="fas fa-utensils"></i>
+            <h4>In-Room Dining</h4>
+            <p>Delicious meals delivered fresh to your door, 24/7.</p>
+          </div>
+          <!-- Add more features as needed -->
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer" id="contact">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <h3>Big 50 Hotel</h3>
+            <p>
+              Unwind in luxury. Stay for the comfort, return for the experience.
+            </p>
+          </div>
+
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#rooms" aria-label="Rooms">Rooms</a></li>
+              <li><a href="gallery.html" aria-label="Gallery">Gallery</a></li>
+              <li><a href="#contact" aria-label="Contact">Contact</a></li>
+              <li>
+                <a href="#" aria-label="Terms & Policies">Terms & Policies</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <a href="tel:+2349069925143"
+              ><p><i class="fas fa-phone"></i> +234 906 992 5143</p></a
+            >
+            <a href="mailto:big50hoteljettu@gmail.com">
+              <p>
+                <i class="fas fa-envelope"></i> big50hoteljettu@gmail.com
+              </p></a
+            >
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Jattu, Edo State, Nigeria
+            </p>
+
+            <div class="footer-socials">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Big 50 Hotel. All rights reserved.</p>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button id="backToTop" title="Back to top">&#8679;</button>
+      </footer>
     </main>
-     <script src="js/script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

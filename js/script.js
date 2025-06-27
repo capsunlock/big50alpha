@@ -83,17 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // switching of home background
 
-// const heroImages = [
-//   '../alphaImages/OUTSIDE.jpg',
-//   '../alphaImages/OUTSIDE-2.jpg")'
-// ];
+const heroImages = [
+  './alpha-images/OUTSIDE-2.jpg',
+  './alpha-images/OUTSIDE.jpg'
+];
 
-// let currentHero = 0;
-// const heroSection = document.getElementById('home');
+let currentHero = 0;
+const heroSection = document.getElementById('home');
 
-// setInterval (() => {
-//   heroSection.style.backgroundImage = `url(${heroImages[currentHero]}`;
-//   currentHero = (currentHero + 1) % heroImages.length;}, 5000);
+setInterval (() => {
+  heroSection.style.backgroundImage = `url(${heroImages[currentHero]}`;
+  currentHero = (currentHero + 1) % heroImages.length;}, 8000);
 
 
 // Popup with call link
@@ -110,12 +110,12 @@ function handleOutsideeClick(event) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const roomList = [
-    { id: 'one', name: 'STANDARD', img: '../Big50/images/big-fifty-two.jpg', rate: '35,500', caution: '15,000' },
-    { id: 'two', name: 'DELUXE', img: '../Big50/images/big-fifty-two.jpg', rate: '37,500', caution: '15,000' },
-    { id: 'three', name: 'EXECUTIVE', img: '../Big50/images/big-fifty-two.jpg', rate: '40,500', caution: '15,000' },
-    { id: 'four', name: 'BUSINESS', img: '../Big50/images/big-fifty-two.jpg', rate: '47,500', caution: '15,000' },
-    { id: 'five', name: 'BIG 50', img: '../Big50/images/big-fifty-two.jpg', rate: '55,000', caution: '15,000' },
-    { id: 'six', name: 'PRESIDENTIAL', img: '../Big50/images/big-fifty-two.jpg', rate: '65,000', caution: '20,000' },
+    { id: 'one', name: 'STANDARD', img: './alpha-images/ROOM-1.jpg', rate: '35,500', caution: '15,000' },
+    { id: 'two', name: 'DELUXE', img: './alpha-images/ROOM-2.jpg', rate: '37,500', caution: '15,000' },
+    { id: 'three', name: 'EXECUTIVE', img: './alpha-images/ROOM-3.jpg', rate: '40,500', caution: '15,000' },
+    { id: 'four', name: 'BUSINESS', img: './alpha-images/ROOM-4.jpg', rate: '47,500', caution: '15,000' },
+    { id: 'five', name: 'BIG 50', img: './alpha-images/ROOM-5.jpg', rate: '55,000', caution: '15,000' },
+    { id: 'six', name: 'PRESIDENTIAL', img: './alpha-images/ROOM-6.jpg', rate: '65,000', caution: '20,000' },
   ];
 
   const container = document.querySelector('.sect');
@@ -157,7 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     img.src = room.img;
     img.alt = `${room.name} Room`;
-    img.onclick = () => showPooopup(room.id);
+    img.loading = 'lazy';
+    img.width = 300;
+    img.height = 200;
+    img.onload = () => img.classList.add('loaded');
+    img.onclick = () => {
+      
+      window.open(room.img, '_blank');
+    }
     h4.textContent = room.name;
     p.innerHTML = `Room rate: ${room.rate} <br />Caution fee: ${room.caution}`;
 
