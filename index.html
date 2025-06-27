@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+     <link rel="stylesheet" href="css/style.css" />
+  </head>
+  </head>
+  <body>
+
+    <!-- Header -->
+      <header>
+      <nav class="container">
+        <div class="logo">
+          <img
+            src="../big50/images/bigfiftylogobold.png"
+            alt="bigFiftyLogo"
+            loading="lazy"
+          />
+          <h1>BIG 50 </h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html" aria-label="Home">Home</a></li>
+          <li><a href="rooms.html" aria-label="Rooms">Room</a></li>
+          <li><a href="about.html" aria-label="About">About Us</a></li>
+          <li><a href="contact.html" aria-label="Contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            aria-label="Toggle Theme"
+          >
+            <span id="theme-toggle-content">🌙</span>
+          </button>
+        </div>
+        <div
+          class="mobile-menu"
+          onclick="toggleMobileMenu()"
+          aria-label="Navigation"
+        >
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+      <div class="home-content">
+        <h1>WELCOME TO BIG 50 HOTEL AND SUITS</h1>
+
+        <button class="btn" onclick="showPopup()">Book Now</button>
+
+        <div
+          class="popup-overlay"
+          id="popup"
+          onclick="handleOutsideeClick(event)"
+        >
+          <div class="popup-content" id="" onclick="event.stopPropagation()">
+            <h1>Booking</h1>
+
+            <p>
+              Welcome to Big 50 Hotel. To make a booking, please give us a call
+              or message us Whatsapp.
+            </p>
+
+            <h3>Contact Information</h3>
+            <div class="contact-info-content">
+              <div id="ty-one" class="ty">
+                <img
+                  src="../big50/images/phone-call-1.png"
+                  alt="phone.png"
+                  loading="lazy"
+                />
+                <p>+234 906 992 5143</p>
+              </div>
+              <a
+                href="https://wa.me/+2349069925143"
+                style="text-decoration: none; color: black"
+                ><div id="ty-two" class="ty">
+                  <img
+                    src="../big50/images/whatsapp.png"
+                    alt="whatsapp.png"
+                    loading="lazy"
+                  />
+                  <p>+234 906 992 5143</p>
+                </div></a
+              >
+            </div>
+            <a href="tel:+2349069925143" class="call-btn">Call Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+     <script src="js/script.js"></script>
+  </body>
+</html>
