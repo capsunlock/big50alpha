@@ -50,6 +50,8 @@
     </header>
 
     <main>
+      
+    <!-- Hero Section -->
       <section id="home" class="hero">
       <div class="home-content">
         <h1>WELCOME TO BIG 50 HOTEL AND SUITES</h1>
@@ -98,57 +100,21 @@
       </div>
     </section>
 
-    <!-- Room Filters -->
-<div class="room-filters">
-  <button onclick="filterRooms('all')">All</button>
-  <button onclick="filterRooms('popular')">Popular</button>
-  <button onclick="filterRooms('best')">Best Value</button>
-</div>
-
-<!-- Rooms Section -->
-<section id="rooms" class="section">
+    <section id="rooms" class="section">
   <h2>Rooms</h2>
-  <section class="sect">
-    <div class="colum">
-      <div class="it-em">
-        <img onclick="showPooopup('one')" src="../Big50/images/big-fifty-two.jpg" alt="Standard Room" loading="lazy" />
-        <h4>STANDARD</h4>
-        <p>Room rate: 35,500 <br />Caution fee: 15,000</p>
-      </div>
-      <div class="it-em">
-        <img onclick="showPooopup('two')" src="../Big50/images/big-fifty-two.jpg" alt="Deluxe Room" loading="lazy" />
-        <h4>DELUXE</h4>
-        <p>Room rate: 37,500 <br />Caution fee: 15,000</p>
-      </div>
-    </div>
-
-    <div class="colum">
-      <div class="it-em">
-        <img onclick="showPooopup('three')" src="../Big50/images/big-fifty-two.jpg" alt="Executive Room" loading="lazy" />
-        <h4>EXECUTIVE</h4>
-        <p>Room rate: 40,500 <br />Caution fee: 15,000</p>
-      </div>
-      <div class="it-em">
-        <img onclick="showPooopup('four')" src="../Big50/images/big-fifty-two.jpg" alt="Business Room" loading="lazy" />
-        <h4>BUSINESS</h4>
-        <p>Room rate: 47,500 <br />Caution fee: 15,000</p>
-      </div>
-    </div>
-
-    <div class="colum">
-      <div class="it-em">
-        <img onclick="showPooopup('five')" src="../Big50/images/big-fifty-two.jpg" alt="Big 50 Room" loading="lazy" />
-        <h4>BIG 50</h4>
-        <p>Room rate: 55,000 <br />Caution fee: 15,000</p>
-      </div>
-      <div class="it-em">
-        <img onclick="showPooopup('six')" src="../Big50/images/big-fifty-two.jpg" alt="Presidential Room" loading="lazy" />
-        <h4>PRESIDENTIAL</h4>
-        <p>Room rate: 65,000 <br />Caution fee: 20,000</p>
-      </div>
-    </div>
-  </section>
+  <section class="sect"></section>
 </section>
+
+<!-- Template for a single room card -->
+<template id="room-card-template">
+  <div class="it-em">
+    <span class="room-tag"></span>
+    <img />
+    <h4></h4>
+    <p></p>
+  </div>
+</template>
+
     </main>
      <script src="js/script.js"></script>
   </body>

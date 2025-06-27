@@ -108,70 +108,87 @@ function handleOutsideeClick(event) {
 }
 
 
-
 document.addEventListener('DOMContentLoaded', () => {
-  const allRooms = document.querySelectorAll('.it-em');
+  const roomList = [
+    { id: 'one', name: 'STANDARD', img: '../Big50/images/big-fifty-two.jpg', rate: '35,500', caution: '15,000' },
+    { id: 'two', name: 'DELUXE', img: '../Big50/images/big-fifty-two.jpg', rate: '37,500', caution: '15,000' },
+    { id: 'three', name: 'EXECUTIVE', img: '../Big50/images/big-fifty-two.jpg', rate: '40,500', caution: '15,000' },
+    { id: 'four', name: 'BUSINESS', img: '../Big50/images/big-fifty-two.jpg', rate: '47,500', caution: '15,000' },
+    { id: 'five', name: 'BIG 50', img: '../Big50/images/big-fifty-two.jpg', rate: '55,000', caution: '15,000' },
+    { id: 'six', name: 'PRESIDENTIAL', img: '../Big50/images/big-fifty-two.jpg', rate: '65,000', caution: '20,000' },
+  ];
+
+  const container = document.querySelector('.sect');
+  const template = document.getElementById('room-card-template');
   const now = Date.now();
-  const day = new Date().getDay(); // 0 = Sun
+  const day = new Date().getDay();
+  const oneDay = 86400000;
+  const oneWeek = 7 * oneDay;
 
-  // --- Popular: Two every 24h, skip weekends ---
-  if (day !== 0 && day !== 6) {
-    const popTime = localStorage.getItem('popularTime');
-    const popIndexes = JSON.parse(localStorage.getItem('popularIndexes') || '[]');
-    const oneDay = 24 * 60 * 60 * 1000;
-    let indexes = [];
+  // --- Shuffle Best Value (1/week) ---
+  let bestIndex = parseInt(localStorage.getItem('bestValueIndex'));
+  const bestTime = parseInt(localStorage.getItem('bestValueTime'));
+  if (!bestTime || now - bestTime > oneWeek) {
+    bestIndex = Math.floor(Math.random() * roomList.length);
+    localStorage.setItem('bestValueIndex', bestIndex);
+    localStorage.setItem('bestValueTime', now.toString());
+  }
 
-    if (!popTime || now - parseInt(popTime) > oneDay) {
-      while (indexes.length < 2) {
-        const i = Math.floor(Math.random() * allRooms.length);
-        if (!indexes.includes(i)) indexes.push(i);
-      }
-      localStorage.setItem('popularIndexes', JSON.stringify(indexes));
-      localStorage.setItem('popularTime', now.toString());
-    } else {
-      indexes = popIndexes;
+  // --- Shuffle Popular (2/day, weekdays only) ---
+  let popularIndexes = JSON.parse(localStorage.getItem('popularIndexes') || '[]');
+  const popularTime = parseInt(localStorage.getItem('popularTime'));
+  if (day !== 0 && day !== 6 && (!popularTime || now - popularTime > oneDay)) {
+    popularIndexes = [];
+    while (popularIndexes.length < 2) {
+      const rand = Math.floor(Math.random() * roomList.length);
+      if (!popularIndexes.includes(rand)) popularIndexes.push(rand);
     }
+    localStorage.setItem('popularIndexes', JSON.stringify(popularIndexes));
+    localStorage.setItem('popularTime', now.toString());
+  }
 
-    allRooms.forEach(room => {
-      room.classList.remove('has-popular');
-      const tag = room.querySelector('.room-tag.popular');
-      if (tag) tag.remove();
-    });
+  // --- Render Cards ---
+  roomList.forEach((room, i) => {
+    const card = template.content.cloneNode(true);
+    const el = card.querySelector('.it-em');
+    const img = card.querySelector('img');
+    const h4 = card.querySelector('h4');
+    const p = card.querySelector('p');
 
-    indexes.forEach(i => {
+    img.src = room.img;
+    img.alt = `${room.name} Room`;
+    img.onclick = () => showPooopup(room.id);
+    h4.textContent = room.name;
+    p.innerHTML = `Room rate: ${room.rate} <br />Caution fee: ${room.caution}`;
+
+    // Tag injection
+    if (i === bestIndex) {
+      const tag = document.createElement('span');
+      tag.className = 'room-tag best';
+      tag.textContent = 'Best Value';
+      el.prepend(tag);
+      el.classList.add('has-best');
+    }
+    if (popularIndexes.includes(i)) {
       const tag = document.createElement('span');
       tag.className = 'room-tag popular';
       tag.textContent = 'Popular';
-      allRooms[i]?.prepend(tag);
-      allRooms[i]?.classList.add('has-popular');
-    });
-  }
+      el.prepend(tag);
+      el.classList.add('has-popular');
+    }
 
-  // --- Best Value: One every 7 days ---
-  const bestTime = localStorage.getItem('bestValueTime');
-  const storedBest = parseInt(localStorage.getItem('bestValueIndex'));
-  const oneWeek = 7 * 24 * 60 * 60 * 1000;
-  let bestIndex;
-
-  if (!bestTime || now - parseInt(bestTime) > oneWeek) {
-    bestIndex = Math.floor(Math.random() * allRooms.length);
-    localStorage.setItem('bestValueTime', now.toString());
-    localStorage.setItem('bestValueIndex', bestIndex);
-  } else {
-    bestIndex = storedBest;
-  }
-
-  allRoomsItems.forEach(item => {
-    item.classList.remove('has-best');
-    const tag = item.querySelector('.room-tag.best');
-    if (tag) tag.remove();
+    container.appendChild(card);
   });
 
-  if (bestRoom) {
-    const tag = document.createElement('span');
-    tag.className = 'room-tag best';
-    tag.textContent = 'Best Value';
-    bestRoom.prepend(tag);
-    bestRoom.classList.add('has-best');
-  }
-})
+  // --- Intersection Observer for fade-in ---
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.it-em').forEach(el => observer.observe(el));
+});
