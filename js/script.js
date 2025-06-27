@@ -106,3 +106,72 @@ function handleOutsideeClick(event) {
   const popup = document.getElementById("popup");
   popup.classList.remove("active");
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const allRooms = document.querySelectorAll('.it-em');
+  const now = Date.now();
+  const day = new Date().getDay(); // 0 = Sun
+
+  // --- Popular: Two every 24h, skip weekends ---
+  if (day !== 0 && day !== 6) {
+    const popTime = localStorage.getItem('popularTime');
+    const popIndexes = JSON.parse(localStorage.getItem('popularIndexes') || '[]');
+    const oneDay = 24 * 60 * 60 * 1000;
+    let indexes = [];
+
+    if (!popTime || now - parseInt(popTime) > oneDay) {
+      while (indexes.length < 2) {
+        const i = Math.floor(Math.random() * allRooms.length);
+        if (!indexes.includes(i)) indexes.push(i);
+      }
+      localStorage.setItem('popularIndexes', JSON.stringify(indexes));
+      localStorage.setItem('popularTime', now.toString());
+    } else {
+      indexes = popIndexes;
+    }
+
+    allRooms.forEach(room => {
+      room.classList.remove('has-popular');
+      const tag = room.querySelector('.room-tag.popular');
+      if (tag) tag.remove();
+    });
+
+    indexes.forEach(i => {
+      const tag = document.createElement('span');
+      tag.className = 'room-tag popular';
+      tag.textContent = 'Popular';
+      allRooms[i]?.prepend(tag);
+      allRooms[i]?.classList.add('has-popular');
+    });
+  }
+
+  // --- Best Value: One every 7 days ---
+  const bestTime = localStorage.getItem('bestValueTime');
+  const storedBest = parseInt(localStorage.getItem('bestValueIndex'));
+  const oneWeek = 7 * 24 * 60 * 60 * 1000;
+  let bestIndex;
+
+  if (!bestTime || now - parseInt(bestTime) > oneWeek) {
+    bestIndex = Math.floor(Math.random() * allRooms.length);
+    localStorage.setItem('bestValueTime', now.toString());
+    localStorage.setItem('bestValueIndex', bestIndex);
+  } else {
+    bestIndex = storedBest;
+  }
+
+  allRoomsItems.forEach(item => {
+    item.classList.remove('has-best');
+    const tag = item.querySelector('.room-tag.best');
+    if (tag) tag.remove();
+  });
+
+  if (bestRoom) {
+    const tag = document.createElement('span');
+    tag.className = 'room-tag best';
+    tag.textContent = 'Best Value';
+    bestRoom.prepend(tag);
+    bestRoom.classList.add('has-best');
+  }
+})
