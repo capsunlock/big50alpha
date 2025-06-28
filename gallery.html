@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav class="container">
+        <div class="logo">
+          <img
+            src="../big50/images/bigfiftylogobold.png"
+            alt="bigFiftyLogo"
+            loading="lazy"
+          />
+          <h1>BIG 50</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html" aria-label="Home">Home</a></li>
+          <li><a href="#rooms" aria-label="Rooms">Room</a></li>
+          <li><a href="gallery.html" aria-label="Gallery">Gallery</a></li>
+          <li><a href="about.html" aria-label="About">About Us</a></li>
+          <li><a href="contact.html" aria-label="Contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            aria-label="Toggle Theme"
+          >
+            <span id="theme-toggle-content">🌙</span>
+          </button>
+        </div>
+        <div
+          class="mobile-menu"
+          onclick="toggleMobileMenu()"
+          aria-label="Navigation"
+        >
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
+
+    <main id="gallery" class="section-gallery">
+      <div class="filter-bar">
+        <button class="filter-button active" data-filter="all">All</button>
+        <button class="filter-button" data-filter="essential">Essential</button>
+        <button class="filter-button" data-filter="dining">Dining</button>
+        <button class="filter-button" data-filter="leisure">Leisure</button>
+        <button class="filter-button" data-filter="wellness">Wellness</button>
+        <button class="filter-button" data-filter="business">Business</button>
+        <button class="filter-button" data-filter="outdoor">Outdoor</button>
+        <button class="filter-button" data-filter="family">Family</button>
+      </div>
+
+      <section class="gallery">
+        <!-- Example Section -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Essential Services</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item essential"
+              data-group="0"
+              onclick="showPooopup('seven')"
+            >
+              <img
+                src="../Big50/images/parking-cover.jpg"
+                alt="Parking"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Parking</p>
+            </div>
+            <div
+              class="gallery-item essential"
+              data-group="1"
+              onclick="showPooopup('eight')"
+            >
+              <img
+                src="../Big50/images/reception-img-one.jpg"
+                alt="Reception"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Reception</p>
+            </div>
+            <div
+              class="gallery-item essential"
+              data-group="2"
+              onclick="showPooopup('nine')"
+            >
+              <img
+                src="../Big50/images/guestroom-cover-img.jpg"
+                alt="Guest Rooms"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Guest Rooms</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repeat other sections here with category class: dining, leisure, wellness, etc. -->
+        <!-- Use the same markup pattern with correct data-filter classes -->
+
+        <!-- Dining & Refreshments -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Dining & Refreshments</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              data-group="3"
+              onclick="showPooopup('ten')"
+            >
+              <img
+                src="../Big50/images/restuarant-cover-two.jpg"
+                alt="Restaurant"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Restaurant</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="4"
+              onclick="showPooopup('eleven')"
+            >
+              <img
+                src="../Big50/images/barlouge-cover-one.jpg"
+                alt="Bar / Lounge"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Bar / Lounge</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="5"
+              onclick="showPooopup('twelve')"
+            >
+              <img
+                src="../Big50/images/caferoomservice-cover-one.jpg"
+                alt="Cafe / Room Service"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Cafe / Room Service</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leisure & Entertainment -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Leisure & Entertainment</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              data-group="6"
+              onclick="showPooopup('thirteen')"
+            >
+              <img
+                src="../Big50/images/pool-cover-one.jpg"
+                alt="Swimming Pool"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Swimming Pool</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="7"
+              onclick="showPooopup('fourteen')"
+            >
+              <img
+                src="../Big50/images/theater-cover-two.jpg"
+                alt="Theater"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Theater</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="8"
+              onclick="showPooopup('fifteen')"
+            >
+              <img
+                src="../Big50/images/gameroom-cover-one.jpg"
+                alt="Game Room"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Game Room</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="9"
+              onclick="showPooopup('sixteen')"
+            >
+              <img
+                src="../Big50/images/nightclub-cover-one.jpg"
+                alt="Nightclub"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Nightclub / Live Entertainment</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fitness & Wellness -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Fitness & Wellness</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              data-group="10"
+              onclick="showPooopup('seventeen')"
+            >
+              <img
+                src="../Big50/images/gym-cover-two.jpg"
+                alt="Gym"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Gym / Fitness Center</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="11"
+              onclick="showPooopup('eighteen')"
+            >
+              <img
+                src="../Big50/images/spa-cover-one.jpg"
+                alt="Spa"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Spa & Massage</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="12"
+              onclick="showPooopup('nineteen')"
+            >
+              <img
+                src="../Big50/images/sauna-cover-one.jpg"
+                alt="Sauna"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Sauna / Steam Room</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business & Events -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Business & Events</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              data-group="13"
+              onclick="showPooopup('twenty')"
+            >
+              <img
+                src="../Big50/images/conference-cover-two.jpg"
+                alt="Conference Room"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Conference Room</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="14"
+              onclick="showPooopup('twenty-one')"
+            >
+              <img
+                src="../Big50/images/meeting-cover-two.jpg"
+                alt="Meeting Room"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Meeting Room</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="15"
+              onclick="showPooopup('twenty-two')"
+            >
+              <img
+                src="../Big50/images/business-cover-ele.jpg"
+                alt="Business Center"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Business Center</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outdoor & Premium Parks -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Outdoor & Premium Parks</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              data-group="16"
+              onclick="showPooopup('twenty-three')"
+            >
+              <img
+                src="../Big50/images/rooftop-cover-twe.jpg"
+                alt="Rooftop Lounge"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Rooftop Lounge</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="17"
+              onclick="showPooopup('twenty-four')"
+            >
+              <img
+                src="../Big50/images/garden-cover-ele.jpg"
+                alt="Garden"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Garden or Courtyard</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Family & Kids -->
+        <div class="gallerysubsection">
+          <h2 class="section-title">Family & Kids</h2>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              data-group="18"
+              onclick="showPooopup('twenty-five')"
+            >
+              <img
+                src="../Big50/images/kids-cover-ele.jpg"
+                alt="Play Area"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Kids' Play Area</p>
+            </div>
+            <div
+              class="gallery-item"
+              data-group="19"
+              onclick="showPooopup('twenty-six')"
+            >
+              <img
+                src="../Big50/images/family-cover-ele.jpg"
+                alt="Family Zone"
+                loading="lazy"
+              />
+              <p class="gallery-image-label">Family E. Zone</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="js/script.js"></script>
+  </body>
+</html>

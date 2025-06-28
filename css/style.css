@@ -66,6 +66,10 @@ body.no-scroll {
   overflow: hidden;
 }
 
+a {
+  text-decoration: none
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -545,6 +549,10 @@ body.nav-open .nav-links {
   color: var(--accent);
 }
 
+.map-overlay p {
+  color: white;
+}
+
 @keyframes bounce {
   0%, 100% { transform: translate(-50%, -50%) translateY(0); }
   50% { transform: translate(-50%, -50%) translateY(-10px); }
@@ -669,6 +677,125 @@ body.nav-open .nav-links {
 }
 .contact-form button:hover {
   background: var(--accent-hover, #1c7d42);
+}
+
+/* Gallery Section */
+.section-gallery {
+  background: var(--bg-light);
+  padding: 4rem 1rem;
+}
+
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallerysubsection {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.gallery-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  background: #fff;
+}
+
+.gallery-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-item:hover {
+  transform: translateY(-6px);
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  border-radius: 12px 12px 0 0;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-image-label {
+  background: var(--bg-secondary);
+  padding: 0.75rem;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+  color: var(--text-primary);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Filter bar styling */
+.filter-bar {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.filter-button {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: none;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.filter-button.active,
+.filter-button:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* WhatsApp Floating */
+.whatsapp-float {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: #25D366;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+.whatsapp-float:hover {
+  background-color: #1ebe5b;
+}
+.whatsapp-float i {
+  vertical-align: middle;
 }
 
 @media (max-width: 768px) {

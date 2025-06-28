@@ -199,3 +199,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.it-em').forEach(el => observer.observe(el));
 });
+
+
+// Gallery Section
+
+// Scroll animation trigger
+const galleryItems = document.querySelectorAll('.gallery-item');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1
+});
+
+galleryItems.forEach(item => observer.observe(item));
+
+// Filter buttons
+const filterButtons = document.querySelectorAll('.filter-button');
+const items = document.querySelectorAll('.gallery-item');
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const filter = button.getAttribute('data-filter');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+
+    items.forEach(item => {
+      const isMatch = item.classList.contains(filter) || filter === 'all';
+      item.style.display = isMatch ? 'block' : 'none';
+    });
+  });
+});
