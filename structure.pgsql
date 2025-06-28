@@ -3,8 +3,9 @@ Big 50 Hotel and Suits/
 ├── rooms.html          # Room listings
 ├── gallery.html        # Photo gallery
 ├── contact.html        # Contact form
+├── about.html          # About Us
 ├── css/
-│   └── style.css       # Your styles
+│   └── style.css       # Syles
 ├── js/
 │   └── main.js         # Sliders, animations, etc.
 └── images/             # Hotel photos
