@@ -912,6 +912,47 @@ body.nav-open .nav-links {
   background: var(--accent-hover, #1c7d42);
 }
 
+
+
+.go-top-comet {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.3s;
+  animation: orbitUp 2s infinite;
+}
+
+.go-top-comet.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.go-top-comet:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-3px);
+}
+
+@keyframes orbitUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 /* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }

@@ -203,58 +203,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Gallery Section
 
-  const filterButtons = document.querySelectorAll('.filter-button');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const searchInput = document.getElementById('gallerySearch');
-    const noResultsMessage = document.getElementById('noResultsMessage');
+const filterButtons = document.querySelectorAll('.filter-button');
+const galleryItems = document.querySelectorAll('.gallery-item');
+const searchInput = document.getElementById('gallerySearch');
+const noResultsMessage = document.getElementById('noResultsMessage');
 
-    let activeFilter = 'all';
-    let activeSearch = '';
+let activeFilter = 'all';
+let activeSearch = '';
 
-    const updateGallery = () => {
-      let resultsCount = 0;
+const updateGallery = () => {
+  let resultsCount = 0;
 
-      galleryItems.forEach(item => {
-        const label = item.querySelector('.gallery-image-label').textContent.toLowerCase();
-        const matchesFilter = activeFilter === 'all' || item.classList.contains(activeFilter);
-        const matchesSearch = label.includes(activeSearch);
+  galleryItems.forEach(item => {
+    const label = item.querySelector('.gallery-image-label').textContent.toLowerCase();
+    const matchesFilter = activeFilter === 'all' || item.classList.contains(activeFilter);
+    const matchesSearch = label.includes(activeSearch);
 
-        const shouldShow = matchesFilter && matchesSearch;
-        item.style.display = shouldShow ? 'block' : 'none';
+    const shouldShow = matchesFilter && matchesSearch;
+    item.style.display = shouldShow ? 'block' : 'none';
 
-        if (shouldShow) {
-          setTimeout(() => item.classList.add('visible'), 10);
-          resultsCount++;
-        } else {
-          item.classList.remove('visible');
-        }
-      });
-
-      noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
-    };
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        activeFilter = button.dataset.filter;
-        updateGallery();
-      });
+    if (shouldShow) {
+      setTimeout(() => item.classList.add('visible'), 10);
+      resultsCount++;
+      } else {
+        item.classList.remove('visible');
+      }
     });
 
-    searchInput.addEventListener('input', () => {
-      activeSearch = searchInput.value.toLowerCase();
-      updateGallery();
-    });
+    noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
+  };
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+  filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    activeFilter = button.dataset.filter;
+    updateGallery();
 
-    galleryItems.forEach(item => observer.observe(item));
+    // Smooth scroll if not "all"
+    if (activeFilter !== 'all') {
+      const section = document.getElementById(activeFilter);
+      if (section) {
+        section.scrollIntoView({
+          behavior: 'smooth', block: 'start'
+        });
+      }
+    }
+  });
+});
 
+searchInput.addEventListener('input', () => {
+  activeSearch = searchInput.value.toLowerCase();
+  updateGallery();
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+galleryItems.forEach(item => observer.observe(item));
+
+// Back to Top
+const goTopComet = document.getElementById('goTopComet');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    goTopComet.classList.add('show');
+  } else {
+    goTopComet.classList.remove('show');
+  }
+});
+
+goTopComet.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
