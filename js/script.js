@@ -203,35 +203,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Gallery Section
 
-// Scroll animation trigger
-const galleryItems = document.querySelectorAll('.gallery-item');
+  const filterButtons = document.querySelectorAll('.filter-button');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const searchInput = document.getElementById('gallerySearch');
+    const noResultsMessage = document.getElementById('noResultsMessage');
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.1
-});
+    let activeFilter = 'all';
+    let activeSearch = '';
 
-galleryItems.forEach(item => observer.observe(item));
+    const updateGallery = () => {
+      let resultsCount = 0;
 
-// Filter buttons
-const filterButtons = document.querySelectorAll('.filter-button');
-const items = document.querySelectorAll('.gallery-item');
+      galleryItems.forEach(item => {
+        const label = item.querySelector('.gallery-image-label').textContent.toLowerCase();
+        const matchesFilter = activeFilter === 'all' || item.classList.contains(activeFilter);
+        const matchesSearch = label.includes(activeSearch);
 
-filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const filter = button.getAttribute('data-filter');
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
+        const shouldShow = matchesFilter && matchesSearch;
+        item.style.display = shouldShow ? 'block' : 'none';
 
-    items.forEach(item => {
-      const isMatch = item.classList.contains(filter) || filter === 'all';
-      item.style.display = isMatch ? 'block' : 'none';
+        if (shouldShow) {
+          setTimeout(() => item.classList.add('visible'), 10);
+          resultsCount++;
+        } else {
+          item.classList.remove('visible');
+        }
+      });
+
+      noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
+    };
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        updateGallery();
+      });
     });
-  });
-});
+
+    searchInput.addEventListener('input', () => {
+      activeSearch = searchInput.value.toLowerCase();
+      updateGallery();
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    galleryItems.forEach(item => observer.observe(item));
+

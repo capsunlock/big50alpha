@@ -51,6 +51,12 @@
     </header>
 
     <main id="gallery" class="section-gallery">
+      <!-- 🔍 Search -->
+      <div class="search-container">
+        <input type="text" id="gallerySearch" placeholder="Search gallery..." />
+      </div>
+
+      <!-- 🎛 Filter Buttons -->
       <div class="filter-bar">
         <button class="filter-button active" data-filter="all">All</button>
         <button class="filter-button" data-filter="essential">Essential</button>
@@ -61,6 +67,13 @@
         <button class="filter-button" data-filter="outdoor">Outdoor</button>
         <button class="filter-button" data-filter="family">Family</button>
       </div>
+
+      <!-- ❗ No Results -->
+      <div id="noResultsMessage" class="no-results" style="display: none">
+        <p>😕 No matches found. Try adjusting your search or category.</p>
+      </div>
+
+      <!-- 🖼 Gallery Content -->
 
       <section class="gallery">
         <!-- Example Section -->
@@ -113,11 +126,7 @@
         <div class="gallerysubsection">
           <h2 class="section-title">Dining & Refreshments</h2>
           <div class="gallery-grid">
-            <div
-              class="gallery-item"
-              data-group="3"
-              onclick="showPooopup('ten')"
-            >
+            <div class="gallery-item dining" data-group="3">
               <img
                 src="../Big50/images/restuarant-cover-two.jpg"
                 alt="Restaurant"
@@ -125,11 +134,7 @@
               />
               <p class="gallery-image-label">Restaurant</p>
             </div>
-            <div
-              class="gallery-item"
-              data-group="4"
-              onclick="showPooopup('eleven')"
-            >
+            <div class="gallery-item dining" data-group="4">
               <img
                 src="../Big50/images/barlouge-cover-one.jpg"
                 alt="Bar / Lounge"
@@ -137,11 +142,7 @@
               />
               <p class="gallery-image-label">Bar / Lounge</p>
             </div>
-            <div
-              class="gallery-item"
-              data-group="5"
-              onclick="showPooopup('twelve')"
-            >
+            <div class="gallery-item dining" data-group="5">
               <img
                 src="../Big50/images/caferoomservice-cover-one.jpg"
                 alt="Cafe / Room Service"
@@ -156,11 +157,7 @@
         <div class="gallerysubsection">
           <h2 class="section-title">Leisure & Entertainment</h2>
           <div class="gallery-grid">
-            <div
-              class="gallery-item"
-              data-group="6"
-              onclick="showPooopup('thirteen')"
-            >
+            <div class="gallery-item leisure" data-group="6">
               <img
                 src="../Big50/images/pool-cover-one.jpg"
                 alt="Swimming Pool"
@@ -168,11 +165,7 @@
               />
               <p class="gallery-image-label">Swimming Pool</p>
             </div>
-            <div
-              class="gallery-item"
-              data-group="7"
-              onclick="showPooopup('fourteen')"
-            >
+            <div class="gallery-item leisure" data-group="7">
               <img
                 src="../Big50/images/theater-cover-two.jpg"
                 alt="Theater"
@@ -180,11 +173,7 @@
               />
               <p class="gallery-image-label">Theater</p>
             </div>
-            <div
-              class="gallery-item"
-              data-group="8"
-              onclick="showPooopup('fifteen')"
-            >
+            <div class="gallery-item leisure" data-group="8">
               <img
                 src="../Big50/images/gameroom-cover-one.jpg"
                 alt="Game Room"
@@ -192,11 +181,7 @@
               />
               <p class="gallery-image-label">Game Room</p>
             </div>
-            <div
-              class="gallery-item"
-              data-group="9"
-              onclick="showPooopup('sixteen')"
-            >
+            <div class="gallery-item leisure" data-group="9">
               <img
                 src="../Big50/images/nightclub-cover-one.jpg"
                 alt="Nightclub"
@@ -212,7 +197,7 @@
           <h2 class="section-title">Fitness & Wellness</h2>
           <div class="gallery-grid">
             <div
-              class="gallery-item"
+              class="gallery-item wellness"
               data-group="10"
               onclick="showPooopup('seventeen')"
             >
@@ -224,7 +209,7 @@
               <p class="gallery-image-label">Gym / Fitness Center</p>
             </div>
             <div
-              class="gallery-item"
+              class="gallery-item wellness"
               data-group="11"
               onclick="showPooopup('eighteen')"
             >
@@ -236,7 +221,7 @@
               <p class="gallery-image-label">Spa & Massage</p>
             </div>
             <div
-              class="gallery-item"
+              class="gallery-item wellness"
               data-group="12"
               onclick="showPooopup('nineteen')"
             >
@@ -255,7 +240,7 @@
           <h2 class="section-title">Business & Events</h2>
           <div class="gallery-grid">
             <div
-              class="gallery-item"
+              class="gallery-item business"
               data-group="13"
               onclick="showPooopup('twenty')"
             >
@@ -267,7 +252,7 @@
               <p class="gallery-image-label">Conference Room</p>
             </div>
             <div
-              class="gallery-item"
+              class="gallery-item business"
               data-group="14"
               onclick="showPooopup('twenty-one')"
             >
@@ -279,7 +264,7 @@
               <p class="gallery-image-label">Meeting Room</p>
             </div>
             <div
-              class="gallery-item"
+              class="gallery-item business"
               data-group="15"
               onclick="showPooopup('twenty-two')"
             >
@@ -298,7 +283,7 @@
           <h2 class="section-title">Outdoor & Premium Parks</h2>
           <div class="gallery-grid">
             <div
-              class="gallery-item"
+              class="gallery-item outdoor"
               data-group="16"
               onclick="showPooopup('twenty-three')"
             >
@@ -310,7 +295,7 @@
               <p class="gallery-image-label">Rooftop Lounge</p>
             </div>
             <div
-              class="gallery-item"
+              class="gallery-item outdoor"
               data-group="17"
               onclick="showPooopup('twenty-four')"
             >
@@ -329,7 +314,7 @@
           <h2 class="section-title">Family & Kids</h2>
           <div class="gallery-grid">
             <div
-              class="gallery-item"
+              class="gallery-item family"
               data-group="18"
               onclick="showPooopup('twenty-five')"
             >
@@ -341,7 +326,7 @@
               <p class="gallery-image-label">Kids' Play Area</p>
             </div>
             <div
-              class="gallery-item"
+              class="gallery-item family"
               data-group="19"
               onclick="showPooopup('twenty-six')"
             >
