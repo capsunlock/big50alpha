@@ -769,6 +769,7 @@ body.nav-open .nav-links {
   box-shadow: var(--shadow);
   cursor: pointer;
   background: var(--bg-primary);
+  max-width: 550px;
 }
 
 .gallery-item.visible {
