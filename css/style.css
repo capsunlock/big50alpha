@@ -999,29 +999,6 @@ input.invalid-email {
 }
 
 /* Back to Top Button */
-#backToTop {
-  position: fixed;
-  bottom: 2rem;
-  right: 1.5rem;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  display: none;
-  z-index: 999;
-  transition: background 0.3s ease;
-}
-#backToTop:hover {
-  background: var(--accent-hover, #1c7d42);
-}
-
-
-
 .go-top-comet {
   position: fixed;
   bottom: 2rem;

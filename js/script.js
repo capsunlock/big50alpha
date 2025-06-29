@@ -284,21 +284,7 @@ if (document.getElementById('noResultsMessage')) {
 
   galleryItems.forEach(item => observer.observe(item));
 
-  // Back to Top
-  const goTopComet = document.getElementById('goTopComet');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      goTopComet.classList.add('show');
-    } else {
-      goTopComet.classList.remove('show');
-    }
-  });
-
-  goTopComet.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
+  
   // Clear search
   const clearButton = document.getElementById('clearSearch');
 
@@ -321,6 +307,22 @@ if (document.getElementById('noResultsMessage')) {
     searchInput.focus();
   });
 }
+
+// Back to Top
+  const goTopComet = document.getElementById('goTopComet');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      goTopComet.classList.add('show');
+    } else {
+      goTopComet.classList.remove('show');
+    }
+  });
+
+  goTopComet.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
 
 // Contact
 document.addEventListener('DOMContentLoaded', () => {
