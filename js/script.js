@@ -309,6 +309,7 @@ if (document.getElementById('noResultsMessage')) {
 }
 
 // Back to Top
+if (document.getElementById('goTopComet')) {
   const goTopComet = document.getElementById('goTopComet');
 
   window.addEventListener('scroll', () => {
@@ -321,8 +322,8 @@ if (document.getElementById('noResultsMessage')) {
 
   goTopComet.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
+  }); 
+}
 
 // Contact
 document.addEventListener('DOMContentLoaded', () => {
@@ -366,5 +367,25 @@ document.addEventListener('DOMContentLoaded', () => {
     el.textContent = msg;
     el.classList.add('show');
     setTimeout(() => el.classList.remove('show'), 3000);
+  }
+});
+
+// Footer
+document.addEventListener('DOMContentLoaded', () => {
+  const footerBottom = document.querySelector('.footer-bottom');
+
+  if (footerBottom) {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            footerBottom.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(footerBottom);
   }
 });

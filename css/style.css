@@ -992,10 +992,34 @@ input.invalid-email {
 }
 .footer-bottom {
   text-align: center;
-  font-size: 0.85rem;
   opacity: 0.8;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1rem;
+}
+/* Signature designer credit */
+.footer-bottom .initials {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.footer-bottom.visible .initials {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer-bottom .initials a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom .initials a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
 }
 
 /* Back to Top Button */
