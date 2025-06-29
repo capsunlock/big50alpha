@@ -364,7 +364,6 @@ body.nav-open .nav-links {
   }
 }
 
-
 /* Card styling */
 .it-em {
   background: var(--bg-primary);
@@ -601,11 +600,11 @@ body.nav-open .nav-links {
   box-shadow: var(--shadow);
   object-fit: cover;
 }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .about-content {
     flex-direction: column-reverse;
   }
-}
+} */
 
 /* Contact section */
 .contact {
