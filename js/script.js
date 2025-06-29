@@ -125,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const oneDay = 86400000;
   const oneWeek = 7 * oneDay;
 
+  if (!container) return;
+
   // --- Shuffle Best Value (1/week) ---
   let bestIndex = parseInt(localStorage.getItem('bestValueIndex'));
   const bestTime = parseInt(localStorage.getItem('bestValueTime'));
@@ -203,82 +205,164 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Gallery Section
 
-const filterButtons = document.querySelectorAll('.filter-button');
-const galleryItems = document.querySelectorAll('.gallery-item');
-const searchInput = document.getElementById('gallerySearch');
-const noResultsMessage = document.getElementById('noResultsMessage');
+if (document.getElementById('noResultsMessage')) {
 
-let activeFilter = 'all';
-let activeSearch = '';
+  const filterButtons = document.querySelectorAll('.filter-button');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const searchInput = document.getElementById('gallerySearch');
+  const noResultsMessage = document.getElementById('noResultsMessage');
 
-const updateGallery = () => {
-  let resultsCount = 0;
+  let activeFilter = 'all';
+  let activeSearch = '';
 
-  galleryItems.forEach(item => {
-    const label = item.querySelector('.gallery-image-label').textContent.toLowerCase();
-    const matchesFilter = activeFilter === 'all' || item.classList.contains(activeFilter);
-    const matchesSearch = label.includes(activeSearch);
+  const updateGallery = () => {
+    let resultsCount = 0;
+    let firstMatch = null;
 
-    const shouldShow = matchesFilter && matchesSearch;
-    item.style.display = shouldShow ? 'block' : 'none';
+    galleryItems.forEach(item => {
+      const label = item.querySelector('.gallery-image-label').textContent.toLowerCase();
+      const matchesFilter = activeFilter === 'all' || item.classList.contains(activeFilter);
+      const matchesSearch = label.includes(activeSearch);
 
-    if (shouldShow) {
-      setTimeout(() => item.classList.add('visible'), 10);
-      resultsCount++;
-      } else {
-        item.classList.remove('visible');
+      const shouldShow = matchesFilter && matchesSearch;
+      item.style.display = shouldShow ? 'block' : 'none';
+
+      if (shouldShow) {
+        if (!firstMatch) firstMatch = item;
+        setTimeout(() => item.classList.add('visible'), 10);
+        resultsCount++;
+        } else {
+          item.classList.remove('visible');
+        }
+      });
+
+      noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
+
+      //Scroll to the first Match (if serching only)
+      if (firstMatch && activeSearch.trim()) {
+        setTimeout(() => {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start'});
+        }, 150);
+        
+      }
+    };
+
+    filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      activeFilter = button.dataset.filter;
+      updateGallery();
+
+      // Smooth scroll if not "all"
+      if (activeFilter !== 'all') {
+        const section = document.getElementById(activeFilter);
+        if (section) {
+          section.scrollIntoView({
+            behavior: 'smooth', block: 'start'
+          });
+        }
       }
     });
+  });
 
-    noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
-  };
 
-  filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    activeFilter = button.dataset.filter;
+  searchInput.addEventListener('input', () => {
+    activeSearch = searchInput.value.toLowerCase();
+    updateGallery();
+  });
+
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  galleryItems.forEach(item => observer.observe(item));
+
+  // Back to Top
+  const goTopComet = document.getElementById('goTopComet');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      goTopComet.classList.add('show');
+    } else {
+      goTopComet.classList.remove('show');
+    }
+  });
+
+  goTopComet.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Clear search
+  const clearButton = document.getElementById('clearSearch');
+
+  searchInput.addEventListener('input', () => {
+    activeSearch = searchInput.value.toLowerCase();
     updateGallery();
 
-    // Smooth scroll if not "all"
-    if (activeFilter !== 'all') {
-      const section = document.getElementById(activeFilter);
-      if (section) {
-        section.scrollIntoView({
-          behavior: 'smooth', block: 'start'
-        });
-      }
+    if (searchInput.value.trim()) {
+      clearButton.classList.add('show');
+    } else {
+      clearButton.classList.remove('show');
     }
   });
-});
 
-searchInput.addEventListener('input', () => {
-  activeSearch = searchInput.value.toLowerCase();
-  updateGallery();
-});
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
+  clearButton.addEventListener('click', () => {
+    searchInput.value = '';
+    activeSearch = '';
+    updateGallery();
+    clearButton.classList.remove('show');
+    searchInput.focus();
   });
-}, { threshold: 0.1 });
+}
 
-galleryItems.forEach(item => observer.observe(item));
+// Contact
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  if (!form) return; // ⛑ Only run on the contact page
 
-// Back to Top
-const goTopComet = document.getElementById('goTopComet');
+  const email = document.getElementById('email');
+  const toastSuccess = document.getElementById('toastSuccess');
+  const toastError = document.getElementById('toastError');
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    goTopComet.classList.add('show');
-  } else {
-    goTopComet.classList.remove('show');
+  // Live email border validation
+  email.addEventListener('input', () => {
+    const value = email.value.trim();
+    email.classList.toggle('valid-email', emailPattern.test(value));
+    email.classList.toggle('invalid-email', value && !emailPattern.test(value));
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const emailVal = email.value.trim();
+    const message = form.message.value.trim();
+
+    if (!name || !emailVal || !message) {
+      showToast(toastError, '⚠ Please fill out all fields.');
+      return;
+    }
+
+    if (!emailPattern.test(emailVal)) {
+      showToast(toastError, '❌ Please enter a valid email address.');
+      return;
+    }
+
+    form.reset();
+    email.classList.remove('valid-email', 'invalid-email');
+    showToast(toastSuccess, '✅ Message sent successfully!');
+  });
+
+  function showToast(el, msg) {
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
   }
-});
-
-goTopComet.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
