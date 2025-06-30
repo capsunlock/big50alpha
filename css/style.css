@@ -352,6 +352,20 @@ body.nav-open .nav-links {
 }
 
 /* Grid layout */
+.room-sort-container {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+#room-sort {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
 .sect {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -361,6 +375,7 @@ body.nav-open .nav-links {
 @media (max-width: 768px) {
   .sect {
     grid-template-columns: 1fr;
+    padding: 0 1rem;
   }
 }
 
