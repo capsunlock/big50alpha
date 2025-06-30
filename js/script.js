@@ -328,26 +328,31 @@ if (document.getElementById('goTopComet')) {
 // Contact
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contactForm');
-  if (!form) return; // ⛑ Only run on the contact page
+  if (!form) return;
 
   const email = document.getElementById('email');
   const toastSuccess = document.getElementById('toastSuccess');
   const toastError = document.getElementById('toastError');
+
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // Live email border validation
+  // 🔴 Email input live validation
   email.addEventListener('input', () => {
     const value = email.value.trim();
     email.classList.toggle('valid-email', emailPattern.test(value));
     email.classList.toggle('invalid-email', value && !emailPattern.test(value));
   });
 
-  form.addEventListener('submit', (e) => {
+  // 🚀 AJAX form submission
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = form.name.value.trim();
-    const emailVal = email.value.trim();
-    const message = form.message.value.trim();
 
+    const formData = new FormData(form);
+    const name = formData.get('name').trim();
+    const emailVal = formData.get('email').trim();
+    const message = formData.get('message').trim();
+
+    // ✅ Simple client-side validation
     if (!name || !emailVal || !message) {
       showToast(toastError, '⚠ Please fill out all fields.');
       return;
@@ -358,11 +363,26 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    form.reset();
-    email.classList.remove('valid-email', 'invalid-email');
-    showToast(toastSuccess, '✅ Message sent successfully!');
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+
+      if (response.ok) {
+        form.reset();
+        email.classList.remove('valid-email', 'invalid-email');
+        showToast(toastSuccess, '✅ Message sent successfully!');
+      } else {
+        showToast(toastError, '❌ Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      showToast(toastError, '❌ Network error. Please try again later.');
+    }
   });
 
+  // 🌟 Reusable toast function
   function showToast(el, msg) {
     el.textContent = msg;
     el.classList.add('show');
@@ -375,16 +395,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const footerBottom = document.querySelector('.footer-bottom');
 
   if (footerBottom) {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            footerBottom.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          footerBottom.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.5 });
 
     observer.observe(footerBottom);
   }

@@ -1001,25 +1001,77 @@ input.invalid-email {
   margin-top: 0.5rem;
   font-size: 0.85rem;
   color: var(--text-light);
-  transform: translateY(10px);
+  gap: 0.3ch;
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.footer-bottom.visible .initials {
-  opacity: 1;
-  transform: translateY(0);
+/* Typing-style designer credit */
+.footer-bottom .initials span {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+  border-right: 2px solid var(--accent);
 }
 
+#credit-1, #credit-2, #credit-3 {
+  width: 0;
+}
+
+.footer-bottom.visible #credit-1 {
+  animation: type1 1.8s steps(25, end) forwards,
+             blinkCursor 0.8s step-end infinite;
+  opacity: 1;
+}
+
+.footer-bottom.visible #credit-2 {
+  animation: type2 2s steps(15, end) 2s forwards,
+             blinkCursor 0.8s step-end infinite 2s;
+  opacity: 1;
+}
+
+.footer-bottom.visible #credit-3 {
+  animation: type3 1.8s steps(30, end) 4s forwards,
+             blinkCursor 0.8s step-end infinite 4s;
+  opacity: 1;
+}
+
+/* Typing keyframes */
+@keyframes type1 { from { width: 0; } to { width: 27ch; } }
+@keyframes type2 { from { width: 0; } to { width: 12ch; } }
+@keyframes type3 { from { width: 0; } to { width: 30ch; } }
+
+@keyframes blinkCursor {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: var(--accent); }
+}
+
+/* Link styling */
 .footer-bottom .initials a {
   color: var(--accent);
   font-weight: 600;
   text-decoration: none;
+  position: relative;
   transition: color 0.3s ease;
+}
+
+.footer-bottom .initials a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-hover);
+  transition: width 0.4s ease;
+}
+
+.footer-bottom .initials a:hover::after {
+  width: 100%;
 }
 
 .footer-bottom .initials a:hover {
   color: var(--accent-hover);
-  text-decoration: underline;
 }
 
 /* Back to Top Button */
