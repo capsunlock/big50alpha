@@ -3,42 +3,42 @@
     "id": "one",
     "name": "STANDARD",
     "img": "./alpha-images/ROOM-1.jpg",
-    "rate": "35,500",
-    "caution": "15,000"
+    "rate": "₦35 500",
+    "caution": "₦15 000"
   },
   {
     "id": "two",
     "name": "DELUXE",
     "img": "./alpha-images/ROOM-2.jpg",
-    "rate": "37,500",
-    "caution": "15,000"
+    "rate": "₦37 500",
+    "caution": "₦15 000"
   },
   {
     "id": "three",
     "name": "EXECUTIVE",
     "img": "./alpha-images/ROOM-3.jpg",
-    "rate": "40,500",
-    "caution": "15,000"
+    "rate": "₦40 500",
+    "caution": "₦15 000"
   },
   {
     "id": "four",
     "name": "BUSINESS",
     "img": "./alpha-images/ROOM-4.jpg",
-    "rate": "47,500",
-    "caution": "15,000"
+    "rate": "₦47 500",
+    "caution": "₦15 000"
   },
   {
     "id": "five",
     "name": "BIG 50",
     "img": "./alpha-images/ROOM-5.jpg",
-    "rate": "55,000",
-    "caution": "15,000"
+    "rate": "₦55 000",
+    "caution": "₦15 000"
   },
   {
     "id": "six",
     "name": "PRESIDENTIAL",
     "img": "./alpha-images/ROOM-6.jpg",
-    "rate": "65,500",
-    "caution": "20,000"
+    "rate": "₦65 500",
+    "caution": "₦20 000"
   }
 ]
