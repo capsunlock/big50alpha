@@ -6,6 +6,8 @@ Big 50 Hotel and Suits/
 ├── about.html          # About Us
 ├── css/
 │   └── style.css       # Syles
+├── data/
+│   └── rooms.json     
 ├── js/
 │   └── main.js         # Sliders, animations, etc.
 └── images/             # Hotel photos
