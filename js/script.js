@@ -108,131 +108,142 @@ function handleOutsideeClick(event) {
 }
 
 // Room
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.sect');
-  const template = document.getElementById('room-card-template');
-  const sortSelect = document.getElementById('room-sort');
+if (document.getElementById('room-sort')) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.sect');
+    const template = document.getElementById('room-card-template');
+    const sortSelect = document.getElementById('room-sort');
 
-  const sheetURL = 'https://sheetdb.io/api/v1/82cpthih32y10'; // API
-  const jsonFallback = './data/rooms.json';
+    const sheetURL = 'https://sheetdb.io/api/v1/82cpthih32y10'; // SheetDB API
+    const jsonFallback = './data/rooms.json';
 
-  const now = Date.now();
-  const day = new Date().getDay();
-  const oneDay = 86400000;
-  const oneWeek = 7 * oneDay;
+    const now = Date.now();
+    const day = new Date().getDay();
+    const oneDay = 86400000;
+    const threeDays = 3 * oneDay;
+    const isWeekday = day >= 1 && day <= 5;
 
-  let bestIndex = parseInt(localStorage.getItem('bestValueIndex'));
-  const bestTime = parseInt(localStorage.getItem('bestValueTime'));
-  if (!bestTime || now - bestTime > oneWeek) {
-    bestIndex = Math.floor(Math.random() * 6);
-    localStorage.setItem('bestValueIndex', bestIndex);
-    localStorage.setItem('bestValueTime', now.toString());
-  }
-
-  let popularIndexes = JSON.parse(localStorage.getItem('popularIndexes') || '[]');
-  const popularTime = parseInt(localStorage.getItem('popularTime'));
-  if (day !== 0 && day !== 6 && (!popularTime || now - popularTime > oneDay)) {
-    popularIndexes = [];
-    while (popularIndexes.length < 2) {
-      const rand = Math.floor(Math.random() * 6);
-      if (!popularIndexes.includes(rand)) popularIndexes.push(rand);
-    }
-    localStorage.setItem('popularIndexes', JSON.stringify(popularIndexes));
-    localStorage.setItem('popularTime', now.toString());
-  }
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  let currentRooms = [];
-
-  const toNumber = val => parseInt(val.replace(/[^\d]/g, ''));
-
-  function renderRoomCards(roomList) {
-    container.innerHTML = '';
-    currentRooms = roomList;
-
-    roomList.forEach((room, i) => {
-      const card = template.content.cloneNode(true);
-      const el = card.querySelector('.it-em');
-      const img = card.querySelector('img');
-      const h4 = card.querySelector('h4');
-      const p = card.querySelector('p');
-
-      img.src = room.img;
-      img.alt = `${room.name} Room`;
-      img.loading = 'lazy';
-      img.width = 300;
-      img.height = 200;
-      img.onload = () => img.classList.add('loaded');
-      img.onclick = () => window.open(room.img, '_blank');
-
-      h4.textContent = room.name;
-      p.innerHTML = `Room rate: ${room.rate} <br />Caution fee: ${room.caution}`;
-
-      if (i === bestIndex) {
-        const tag = document.createElement('span');
-        tag.className = 'room-tag best';
-        tag.textContent = 'Best Value';
-        tag.style.animationDelay = `${i * 80}ms`;
-        el.prepend(tag);
-        el.classList.add('has-best');
-      }
-
-      if (popularIndexes.includes(i)) {
-        const tag = document.createElement('span');
-        tag.className = 'room-tag popular';
-        tag.textContent = 'Popular';
-        tag.style.animationDelay = `${i * 100}ms`;
-        el.prepend(tag);
-        el.classList.add('has-popular');
-      }
-
-      container.appendChild(card);
-      observer.observe(el);
-    });
-  }
-
-  sortSelect.addEventListener('change', () => {
-    const sorted = [...currentRooms];
-    const sortBy = sortSelect.value;
-
-    if (sortBy === 'price-asc') {
-      sorted.sort((a, b) => toNumber(a.rate) - toNumber(b.rate));
-    } else if (sortBy === 'price-desc') {
-      sorted.sort((a, b) => toNumber(b.rate) - toNumber(a.rate));
+    // Best Value (based on ID)
+    let bestId = localStorage.getItem('bestValueId');
+    const bestTime = parseInt(localStorage.getItem('bestValueTime'));
+    if (!bestTime || (isWeekday && now - bestTime > threeDays)) {
+      bestId = null; // Will pick fresh ID after data loads
+      localStorage.setItem('bestValueTime', now.toString());
     }
 
-    renderRoomCards(sortBy === 'default' ? currentRooms : sorted);
+    // Popular (based on ID)
+    let popularIds = JSON.parse(localStorage.getItem('popularIds') || '[]');
+    const popularTime = parseInt(localStorage.getItem('popularTime'));
+    if (isWeekday && (!popularTime || now - popularTime > oneDay)) {
+      popularIds = [];
+      localStorage.setItem('popularTime', now.toString());
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    let currentRooms = [];
+
+    const toNumber = val => parseInt(val.replace(/[^\d]/g, ''));
+
+    function renderRoomCards(roomList) {
+      container.innerHTML = '';
+      currentRooms = roomList;
+
+      // 💫 Choose bestId if missing
+      if (!bestId || !roomList.some(r => r.id === bestId)) {
+        const randomBest = roomList[Math.floor(Math.random() * roomList.length)];
+        bestId = randomBest.id;
+        localStorage.setItem('bestValueId', bestId);
+      }
+
+      // 💫 Choose popularIds if missing or mismatched
+      if (popularIds.length !== 2 || !popularIds.every(pid => roomList.some(r => r.id === pid))) {
+        popularIds = [];
+        while (popularIds.length < 2) {
+          const rand = Math.floor(Math.random() * roomList.length);
+          const id = roomList[rand].id;
+          if (!popularIds.includes(id)) popularIds.push(id);
+        }
+        localStorage.setItem('popularIds', JSON.stringify(popularIds));
+      }
+
+      roomList.forEach((room, i) => {
+        const card = template.content.cloneNode(true);
+        const el = card.querySelector('.it-em');
+        const img = card.querySelector('img');
+        const h4 = card.querySelector('h4');
+        const p = card.querySelector('p');
+
+        img.src = room.img;
+        img.alt = `${room.name} Room`;
+        img.loading = 'lazy';
+        img.width = 300;
+        img.height = 200;
+        img.onload = () => img.classList.add('loaded');
+        img.onclick = () => window.open(room.img, '_blank');
+
+        h4.textContent = room.name;
+        p.innerHTML = `Room rate: ${room.rate} <br />Caution fee: ${room.caution}`;
+
+        if (room.id === bestId) {
+          const tag = document.createElement('span');
+          tag.className = 'room-tag best';
+          tag.textContent = 'Best Value';
+          tag.style.animationDelay = `${i * 80}ms`;
+          el.prepend(tag);
+          el.classList.add('has-best');
+        }
+
+        if (popularIds.includes(room.id)) {
+          const tag = document.createElement('span');
+          tag.className = 'room-tag popular';
+          tag.textContent = 'Popular';
+          tag.style.animationDelay = `${i * 100}ms`;
+          el.prepend(tag);
+          el.classList.add('has-popular');
+        }
+
+        container.appendChild(card);
+        observer.observe(el);
+      });
+    }
+
+    sortSelect.addEventListener('change', () => {
+      const sorted = [...currentRooms];
+      const sortBy = sortSelect.value;
+
+      if (sortBy === 'price-asc') {
+        sorted.sort((a, b) => toNumber(a.rate) - toNumber(b.rate));
+      } else if (sortBy === 'price-desc') {
+        sorted.sort((a, b) => toNumber(b.rate) - toNumber(a.rate));
+      }
+
+      renderRoomCards(sortBy === 'default' ? currentRooms : sorted);
+    });
+
+    fetch(sheetURL)
+      .then(res => {
+        if (!res.ok) throw new Error('SheetDB fetch failed');
+        return res.json();
+      })
+      .then(data => renderRoomCards(data))
+      .catch(() => {
+        fetch(jsonFallback)
+          .then(res => res.json())
+          .then(data => renderRoomCards(data))
+          .catch(() => {
+            container.innerHTML = '<p style="text-align:center;">Failed to load rooms.</p>';
+          });
+      });
   });
-
-  fetch(sheetURL)
-    .then(res => {
-      if (!res.ok) throw new Error('SheetDB fetch failed');
-      return res.json();
-    })
-    .then(data => {
-      bestIndex = Math.floor(Math.random() * data.length);
-      renderRoomCards(data);
-    })
-    .catch(() => {
-      fetch(jsonFallback)
-        .then(res => res.json())
-        .then(data => {
-          bestIndex = Math.floor(Math.random() * data.length);
-          renderRoomCards(data);
-        })
-        .catch(() => {
-          container.innerHTML = '<p style="text-align:center;">Failed to load rooms.</p>';
-        });
-    });
-});
+}
   // --- Intersection Observer for fade-in ---
   // const observer = new IntersectionObserver(entries => {
   //   entries.forEach(entry => {
