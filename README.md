@@ -11,7 +11,7 @@
 
 ## Live Site
 
-[*Visit the website*](https://capsunlock.github.io/big50/)
+[*Visit the website*](https://capsunlock.github.io/big50alpha/)
 
 ---
 
