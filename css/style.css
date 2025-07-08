@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -725,6 +726,9 @@ body.nav-open .nav-links {
   .contact-container {
     flex-direction: column;
     align-content: center;
+  }
+  .gallery-container {
+    min-height: 80vh;
   }
 }
 
