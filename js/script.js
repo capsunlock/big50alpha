@@ -293,7 +293,7 @@ if (document.getElementById('noResultsMessage')) {
       noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
 
       //Scroll to the first Match (if serching only)
-      if (firstMatch && activeSearch.trim()) {
+      if (firstMatch && activeSearch.trim() && document.activeElement === searchInput) {
         setTimeout(() => {
         firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start'});
         }, 150);
@@ -359,7 +359,10 @@ if (document.getElementById('noResultsMessage')) {
     updateGallery();
     clearButton.classList.remove('show');
     searchInput.focus();
-  });
+    searchInput.scrollIntoView({
+      behavior: 'smooth', block: 'center'
+    });
+  })
 }
 
 // Back to Top
