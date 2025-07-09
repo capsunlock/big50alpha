@@ -260,11 +260,11 @@ if (document.getElementById('room-sort')) {
 // Gallery Section
 
 if (document.getElementById('noResultsMessage')) {
-
   const filterButtons = document.querySelectorAll('.filter-button');
   const galleryItems = document.querySelectorAll('.gallery-item');
   const searchInput = document.getElementById('gallerySearch');
   const noResultsMessage = document.getElementById('noResultsMessage');
+  const clearButton = document.getElementById('clearSearch');
 
   let activeFilter = 'all';
   let activeSearch = '';
@@ -285,48 +285,63 @@ if (document.getElementById('noResultsMessage')) {
         if (!firstMatch) firstMatch = item;
         setTimeout(() => item.classList.add('visible'), 10);
         resultsCount++;
-        } else {
-          item.classList.remove('visible');
-        }
-      });
-
-      noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
-
-      //Scroll to the first Match (if serching only)
-      if (firstMatch && activeSearch.trim() && document.activeElement === searchInput) {
-        setTimeout(() => {
-        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start'});
-        }, 150);
-        
+      } else {
+        item.classList.remove('visible');
       }
-    };
+    });
 
-    filterButtons.forEach(button => {
+    noResultsMessage.style.display = resultsCount === 0 ? 'block' : 'none';
+
+    // 📱 Scroll to first match only while actively typing
+    if (
+      firstMatch &&
+      activeSearch.trim() &&
+      document.activeElement === searchInput
+    ) {
+      setTimeout(() => {
+        window.requestAnimationFrame(() => {
+          firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }, 300);
+    }
+  };
+
+  filterButtons.forEach(button => {
     button.addEventListener('click', () => {
       filterButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
       activeFilter = button.dataset.filter;
       updateGallery();
 
-      // Smooth scroll if not "all"
+      // Smooth scroll to section (if not "all")
       if (activeFilter !== 'all') {
         const section = document.getElementById(activeFilter);
         if (section) {
-          section.scrollIntoView({
-            behavior: 'smooth', block: 'start'
-          });
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     });
   });
 
-
   searchInput.addEventListener('input', () => {
     activeSearch = searchInput.value.toLowerCase();
     updateGallery();
+
+    clearButton.classList.toggle('show', searchInput.value.trim());
   });
 
+  clearButton.addEventListener('click', () => {
+    searchInput.value = '';
+    activeSearch = '';
+    updateGallery();
+    clearButton.classList.remove('show');
+    setTimeout(() => {
+      searchInput.focus();
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 400);
+  });
 
+  // 💫 Reveal items as they scroll into view
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -337,32 +352,6 @@ if (document.getElementById('noResultsMessage')) {
   }, { threshold: 0.1 });
 
   galleryItems.forEach(item => observer.observe(item));
-
-  
-  // Clear search
-  const clearButton = document.getElementById('clearSearch');
-
-  searchInput.addEventListener('input', () => {
-    activeSearch = searchInput.value.toLowerCase();
-    updateGallery();
-
-    if (searchInput.value.trim()) {
-      clearButton.classList.add('show');
-    } else {
-      clearButton.classList.remove('show');
-    }
-  });
-
-  clearButton.addEventListener('click', () => {
-    searchInput.value = '';
-    activeSearch = '';
-    updateGallery();
-    clearButton.classList.remove('show');
-    searchInput.focus();
-    searchInput.scrollIntoView({
-      behavior: 'smooth', block: 'center'
-    });
-  })
 }
 
 // Back to Top
